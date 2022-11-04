@@ -19,7 +19,9 @@ class Lab2TestCase(TestCase):
         c = Client(HTTP_X_USER_NAME="owlya")
         page = 1
         size = 5
-        result = c.get("http://" + os.environ.get('GATEWAY', 'localhost') + ":8080/api/v1/flights?page={}&size={}".format(page, size))
+        result = c.get(
+            "http://" + os.environ.get('GATEWAY', 'localhost') + ":8080/api/v1/flights?page={}&size={}".format(page,
+                                                                                                               size))
         self.assertEqual(result.status_code, 200)
 
     def test_show_my_tickets(self):
@@ -37,8 +39,8 @@ class Lab2TestCase(TestCase):
     def test_show_me(self):
         c = Client(HTTP_X_USER_NAME="owlya")
         result = c.get("http://" + os.environ.get('GATEWAY', 'localhost') + ":8080/api/v1/me")
+        print(result.json())
         self.assertEqual(result.status_code, 200)
-
 
     def test_show_me_no_user(self):
         c = Client(HTTP_X_USER_NAME="no_owlya")
@@ -48,6 +50,7 @@ class Lab2TestCase(TestCase):
     def test_my_balance(self):
         c = Client(HTTP_X_USER_NAME="owlya")
         result = c.get("http://" + os.environ.get('GATEWAY', 'localhost') + ":8080/api/v1/privilege")
+        print(result.json())
         self.assertEqual(result.status_code, 200)
 
     def test_my_balance_no_user(self):
@@ -63,6 +66,7 @@ class Lab2TestCase(TestCase):
             "paidFromBalance": True
         }
         result = c.post("http://" + os.environ.get('GATEWAY', 'localhost') + ":8080/api/v1/tickets", data=data)
+        print(result.json())
         self.assertEqual(result.status_code, 200)
 
     def test_buy_ticket_no_flight(self):
