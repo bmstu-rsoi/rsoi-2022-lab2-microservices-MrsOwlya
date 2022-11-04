@@ -10,7 +10,7 @@
 },
 {
   "model": "bonus.privilege",
-  "pk": 1,
+  "pk": 2,
   "fields": {
     "username": "Test Max",
     "status": "GOLD",
