@@ -22,6 +22,8 @@ class Lab2TestCase(TestCase):
         result = c.get(
             "http://" + os.environ.get('GATEWAY', 'localhost') + ":8080/api/v1/flights?page={}&size={}".format(page,
                                                                                                                size))
+        print("api/v1/flights?page={}&size={}")
+        print(result.json())
         self.assertEqual(result.status_code, 200)
 
     def test_show_my_tickets(self):
