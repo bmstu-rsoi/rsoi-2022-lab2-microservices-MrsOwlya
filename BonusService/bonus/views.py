@@ -102,7 +102,7 @@ def count_bonuses(request):
         add_to_history(user_bonus.id, request.data["ticketUid"], balance_diff, op)
         return JsonResponse(data, status=status.HTTP_200_OK, safe=False)
     except Exception as e:
-        return JsonResponse({'message': '{}'.format(e)}, status=status.HTTP_400_BAD_REQUEST)
+        return JsonResponse({'user': user,'message': '{}'.format(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['PATCH'])
