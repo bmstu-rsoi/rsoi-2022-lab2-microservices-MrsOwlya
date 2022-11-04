@@ -29,13 +29,18 @@ jobs:
           docker compose up -d
           ./scripts/wait-script.sh
 
-      - name: Run tests
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install Dependencies
         run: |
-            virtualenv venv
-            source venv/bin/activate
-            pip3 install -r requirements.txt
-            cd GatewayService
-            ./manage.py test
+          python3 -m pip3 install --upgrade pip
+          pip3 install -r requirements.txt
+      - name: Run Tests
+        run:
+          cd GatewayService
+          ./manage.py test
 
       - name: Run API Tests
         uses: matt-ball/newman-action@master
