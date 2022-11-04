@@ -39,6 +39,7 @@ class Lab2TestCase(TestCase):
     def test_show_me(self):
         c = Client(HTTP_X_USER_NAME="owlya")
         result = c.get("http://" + os.environ.get('GATEWAY', 'localhost') + ":8080/api/v1/me")
+        print("/api/v1/me")
         print(result.json())
         self.assertEqual(result.status_code, 200)
 
@@ -50,6 +51,7 @@ class Lab2TestCase(TestCase):
     def test_my_balance(self):
         c = Client(HTTP_X_USER_NAME="owlya")
         result = c.get("http://" + os.environ.get('GATEWAY', 'localhost') + ":8080/api/v1/privilege")
+        print("/api/v1/privilege")
         print(result.json())
         self.assertEqual(result.status_code, 200)
 
@@ -66,6 +68,7 @@ class Lab2TestCase(TestCase):
             "paidFromBalance": True
         }
         result = c.post("http://" + os.environ.get('GATEWAY', 'localhost') + ":8080/api/v1/tickets", data=data)
+        print("/api/v1/tickets")
         print(result.json())
         self.assertEqual(result.status_code, 200)
 
