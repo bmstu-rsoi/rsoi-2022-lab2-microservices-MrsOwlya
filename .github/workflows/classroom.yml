@@ -31,7 +31,7 @@ jobs:
 
       - name: Run tests
         run: |
-            cd GatewayService/gateway
+            cd GatewayService
             ./manage.py test
 
       - name: Run API Tests
