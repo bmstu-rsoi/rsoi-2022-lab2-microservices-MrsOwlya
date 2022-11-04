@@ -31,12 +31,17 @@ jobs:
         env:
           - WAIT_PORTS=8080,8070,8060,8050
 
+      - name: Run tests
+        run: |
+            cd GatewayService/gateway
+            ./manage.py test
+
       - name: Run API Tests
         uses: matt-ball/newman-action@master
         with:
           # TODO insert your variant
-          collection: <variant>/postman/collection.json
-          environment: <variant>/postman/environment.json
+          collection: v1/postman/collection.json
+          environment: v1/postman/environment.json
           delayRequest: 100
           reporters: '[ "cli" ]'
 

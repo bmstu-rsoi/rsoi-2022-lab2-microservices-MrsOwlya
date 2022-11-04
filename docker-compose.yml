@@ -1,6 +1,6 @@
 version: "3"
 services:
-  postgres:
+  db:
     image: library/postgres:13
     container_name: postgres
     restart: on-failure
@@ -13,6 +13,62 @@ services:
       - ./postgres/:/docker-entrypoint-initdb.d/
     ports:
       - "5432:5432"
+  gateway:
+    build: ./GatewayService/
+    restart: on-failure
+    command:  >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8080"
+    volumes:
+      - ./GatewayService/:/GatewayService/
+    ports:
+      - '8080:8080'
+    env_file:
+      - ./GatewayService/.env.dev
+  ticket:
+    build: ./TicketService/
+    restart: on-failure
+    command:  >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8070"
+    volumes:
+      - ./TicketService/:/TicketService/
+    ports:
+      - '8070:8070'
+    env_file:
+      - ./TicketService/.env.dev
+    depends_on:
+      - db
+  flight:
+    build: ./FlightService/
+    restart: on-failure
+    command:  >
+      sh -c "python manage.py migrate &&
+             python manage.py loaddata dump.json &&
+             python manage.py runserver 0.0.0.0:8060"
+    volumes:
+      - ./FlightService/:/FlightService/
+    ports:
+      - '8060:8060'
+    env_file:
+      - ./FlightService/.env.dev
+    depends_on:
+      - db
+  bonus:
+    build: ./BonusService/
+    restart: on-failure
+    command:  >
+      sh -c "python manage.py migrate &&
+             python manage.py loaddata dump.json &&
+             python manage.py runserver 0.0.0.0:8050"
+    volumes:
+      - ./BonusService/:/BonusService/
+    ports:
+      - '8050:8050'
+    env_file:
+      - ./BonusService/.env.dev
+    depends_on:
+      - db
 
 # TODO добавить сервисы
 
