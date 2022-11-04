@@ -40,7 +40,7 @@ jobs:
       - name: Run Tests
         run:
           cd GatewayService
-          ./manage.py test
+          python3 manage.py test
 
       - name: Run API Tests
         uses: matt-ball/newman-action@master
